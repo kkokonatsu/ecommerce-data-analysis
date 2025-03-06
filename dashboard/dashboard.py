@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import locale
 import geopandas as gpd
 from folium.plugins import MarkerCluster
 import plotly.express as px
