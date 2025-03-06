@@ -69,7 +69,7 @@ Selanjutnya, kita akan menganalisis apakah **akurasi pengiriman berdampak pada r
 """)
 
 # Visualisasi: Boxplot
-st.markdown("#### Hubungan akurasi Pengiriman & Review Score, 2017")
+st.markdown("#### Hubungan Akurasi Pengiriman & Review Score, 2017")
 fig = px.box(main_df, 
              x="review_score", 
              y="shipping_delay_days", 
@@ -106,7 +106,7 @@ st.markdown("---")
 
 # Pertanyaan Bisnis 3
 st.markdown("""  
-## 🌎 **Lalu, Di Mana *sih* akurasi Pengiriman Paling Sering Terjadi?**
+## 🌎 **Lalu, Gimana Sebaran Akurasi Pengiriman di Tiap Daerah?**
 
 Dari analisis sebelumnya, kita menemukan bahwa **akurasi pengiriman memang berpengaruh terhadap review pelanggan**, tetapi **bukan satu-satunya faktor penentu**. Selain itu, kita juga melihat bahwa **tidak semua pelanggan yang mengalami keterlambatan memberikan review buruk**, yang berarti ada faktor lain seperti **kualitas produk dan layanan pelanggan** yang turut berperan. Namun, sekarang muncul pertanyaan baru: 
 
