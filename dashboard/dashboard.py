@@ -14,7 +14,7 @@ st.title("E-Commerce Data Analysis - Interactive Story")
 st.markdown("""
     Dalam proyek ini, kita akan mengeksplorasi tiga pertanyaan bisnis yang penting tentang 
     **tren penjualan, pengaruh keterlambatan pengiriman terhadap kepuasan pelanggan**, dan 
-    **sebaran geografis keterlambatan pengiriman di Brasil**.
+    **sebaran geografis akurasi pengiriman di Brasil**.
     **Ayo mulai perjalanan interaktif ini!**
 """)
 
