@@ -30,35 +30,24 @@ st.markdown("""
 
 main_df["order_delivered_customer_date"] = pd.to_datetime(main_df["order_delivered_customer_date"])
 
-# Filter data untuk tahun 2017
 df_2017 = main_df[main_df["order_delivered_customer_date"].dt.year == 2017].copy()
 
-# Mapping angka bulan ke nama bulan dalam Bahasa Indonesia
 bulan_mapping = {
     1: "Januari", 2: "Februari", 3: "Maret", 4: "April", 5: "Mei", 6: "Juni",
     7: "Juli", 8: "Agustus", 9: "September", 10: "Oktober", 11: "November", 12: "Desember"
 }
-
-# Gunakan dt.month untuk mendapatkan angka bulan, lalu konversi ke nama bulan
 df_2017["order_month"] = df_2017["order_delivered_customer_date"].dt.month.map(bulan_mapping)
+bulan_sorted = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
 
-# Urutan nama bulan dalam bahasa Indonesia
-bulan_sorted = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", 
-                "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
-
-# Hitung jumlah pesanan per bulan
 monthly_orders = df_2017["order_month"].value_counts().reindex(bulan_sorted, fill_value=0)
-
-# Buat DataFrame untuk visualisasi
 monthly_orders_df = pd.DataFrame({
     "Bulan": monthly_orders.index,
     "Jumlah Pesanan": monthly_orders.values
 })
-
-# Set index untuk visualisasi
+monthly_orders_df["Bulan"] = pd.Categorical(monthly_orders_df["Bulan"], categories=bulan_sorted, ordered=True)
+monthly_orders_df = monthly_orders_df.sort_values("Bulan")  # Pastikan urutan benar
 monthly_orders_df.set_index("Bulan", inplace=True)
 
-# Visualisasi: Line Chart
 st.markdown("#### Tren Jumlah Pesanan per Bulan, 2017")
 st.line_chart(monthly_orders_df)
 
