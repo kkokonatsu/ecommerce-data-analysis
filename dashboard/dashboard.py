@@ -9,7 +9,7 @@ import plotly.express as px
 
 # Load dataset
 main_df = pd.read_csv("dashboard/main_data.csv")
-locale.setlocale(locale.LC_TIME, "id_ID.UTF-8")
+# locale.setlocale(locale.LC_TIME, "id_ID.UTF-8")
 
 # Beginning
 st.title("E-Commerce Data Analysis - Interactive Story")
