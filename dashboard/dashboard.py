@@ -8,8 +8,7 @@ from folium.plugins import MarkerCluster
 import plotly.express as px
 
 # Load dataset
-main_df = pd.read_csv("dashboard/main_data.csv")
-locale.setlocale(locale.LC_TIME, "id_ID.UTF-8")
+main_df = pd.read_csv("main_data.csv")
 
 # Beginning
 st.title("E-Commerce Data Analysis - Interactive Story")
@@ -31,15 +30,33 @@ st.markdown("""
 """)
 
 main_df["order_delivered_customer_date"] = pd.to_datetime(main_df["order_delivered_customer_date"])
+
+# Filter data untuk tahun 2017
 df_2017 = main_df[main_df["order_delivered_customer_date"].dt.year == 2017].copy()
-df_2017["order_month"] = df_2017["order_delivered_customer_date"].dt.strftime("%B")
+
+# Mapping angka bulan ke nama bulan dalam Bahasa Indonesia
+bulan_mapping = {
+    1: "Januari", 2: "Februari", 3: "Maret", 4: "April", 5: "Mei", 6: "Juni",
+    7: "Juli", 8: "Agustus", 9: "September", 10: "Oktober", 11: "November", 12: "Desember"
+}
+
+# Gunakan dt.month untuk mendapatkan angka bulan, lalu konversi ke nama bulan
+df_2017["order_month"] = df_2017["order_delivered_customer_date"].dt.month.map(bulan_mapping)
+
+# Urutan nama bulan dalam bahasa Indonesia
 bulan_sorted = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", 
                 "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
+
+# Hitung jumlah pesanan per bulan
 monthly_orders = df_2017["order_month"].value_counts().reindex(bulan_sorted, fill_value=0)
+
+# Buat DataFrame untuk visualisasi
 monthly_orders_df = pd.DataFrame({
     "Bulan": monthly_orders.index,
     "Jumlah Pesanan": monthly_orders.values
 })
+
+# Set index untuk visualisasi
 monthly_orders_df.set_index("Bulan", inplace=True)
 
 # Visualisasi: Line Chart
