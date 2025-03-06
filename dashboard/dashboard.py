@@ -8,7 +8,7 @@ from folium.plugins import MarkerCluster
 import plotly.express as px
 
 # Load dataset
-main_df = pd.read_csv("main_data.csv")
+main_df = pd.read_csv("dashboard/main_data.csv")
 
 # Beginning
 st.title("E-Commerce Data Analysis - Interactive Story")
