@@ -13,7 +13,7 @@ main_df = pd.read_csv("dashboard/main_data.csv")
 st.title("E-Commerce Data Analysis - Interactive Story")
 st.markdown("""
     Dalam proyek ini, kita akan mengeksplorasi tiga pertanyaan bisnis yang penting tentang 
-    **tren penjualan, pengaruh keterlambatan pengiriman terhadap kepuasan pelanggan**, dan 
+    **tren penjualan, pengaruh akurasi pengiriman terhadap kepuasan pelanggan**, dan 
     **sebaran geografis akurasi pengiriman di Brasil**.
     **Ayo mulai perjalanan interaktif ini!**
 """)
@@ -63,13 +63,13 @@ st.markdown("""
 Kita telah melihat bahwa tren jumlah pesanan **meningkat sepanjang tahun**, dengan **lonjakan signifikan pada bulan Desember**. Namun, ada pertanyaan yang lebih dalam:
 
 💡 **Apakah semua pesanan tiba tepat waktu?**  
-💡 **Bagaimana keterlambatan pengiriman mempengaruhi pengalaman pelanggan?**  
+💡 **Bagaimana akurasi pengiriman mempengaruhi pengalaman pelanggan?**  
 
-Selanjutnya, kita akan menganalisis apakah **keterlambatan pengiriman berdampak pada review pelanggan**. Apakah semakin lama keterlambatan, semakin buruk *review* yang diberikan pelanggan? Mari kita lihat! 👇
+Selanjutnya, kita akan menganalisis apakah **akurasi pengiriman berdampak pada review pelanggan**. Apakah semakin lama waktu pengiriman, semakin buruk *review* yang diberikan pelanggan? Mari kita lihat! 👇
 """)
 
 # Visualisasi: Boxplot
-st.markdown("#### Hubungan Keterlambatan Pengiriman & Review Score, 2017")
+st.markdown("#### Hubungan akurasi Pengiriman & Review Score, 2017")
 fig = px.box(main_df, 
              x="review_score", 
              y="shipping_delay_days", 
@@ -78,7 +78,7 @@ fig = px.box(main_df,
              title="")
 fig.update_layout(
     xaxis_title="Review Score",
-    yaxis_title="Jumlah Hari Keterlambatan",
+    yaxis_title="Akurasi Pengiriman",
     boxmode="group"
 )
 st.plotly_chart(fig)
@@ -100,19 +100,19 @@ correlation = df_2017["shipping_delay_days"].corr(df_2017["review_score"])
 st.metric(label="Korelasi Pearson", value=f"{correlation:.4f}")
 
 # Interpretasi
-st.markdown("Terdapat hubungan **negatif dan lemah** antara keterlambatan pengiriman dan review score (**Pearson = -0.1954**), yang berarti semakin lama keterlambatan, semakin rendah rating pelanggan, tetapi bukan satu-satunya faktor penentu. Oleh karena itu, mengurangi keterlambatan pengiriman saja tidak cukup. Perusahaan juga perlu meningkatkan layanan pelanggan dan memastikan kualitas produk untuk mempertahankan kepuasan pelanggan dan rating yang tinggi.  ")
+st.markdown("Terdapat hubungan **negatif dan lemah** antara akurasi pengiriman dan review score (**Pearson = -0.1954**), yang berarti semakin lama pengiriman, semakin rendah rating pelanggan, tetapi bukan satu-satunya faktor penentu. Oleh karena itu, mengurangi akurasi pengiriman saja tidak cukup. Perusahaan juga perlu meningkatkan layanan pelanggan dan memastikan kualitas produk untuk mempertahankan kepuasan pelanggan dan rating yang tinggi.  ")
 st.markdown("---")
 
 
 # Pertanyaan Bisnis 3
 st.markdown("""  
-## 🌎 **Lalu, Di Mana *sih* Keterlambatan Pengiriman Paling Sering Terjadi?**
+## 🌎 **Lalu, Di Mana *sih* akurasi Pengiriman Paling Sering Terjadi?**
 
-Dari analisis sebelumnya, kita menemukan bahwa **keterlambatan pengiriman memang berpengaruh terhadap review pelanggan**, tetapi **bukan satu-satunya faktor penentu**. Selain itu, kita juga melihat bahwa **tidak semua pelanggan yang mengalami keterlambatan memberikan review buruk**, yang berarti ada faktor lain seperti **kualitas produk dan layanan pelanggan** yang turut berperan. Namun, sekarang muncul pertanyaan baru: 
+Dari analisis sebelumnya, kita menemukan bahwa **akurasi pengiriman memang berpengaruh terhadap review pelanggan**, tetapi **bukan satu-satunya faktor penentu**. Selain itu, kita juga melihat bahwa **tidak semua pelanggan yang mengalami keterlambatan memberikan review buruk**, yang berarti ada faktor lain seperti **kualitas produk dan layanan pelanggan** yang turut berperan. Namun, sekarang muncul pertanyaan baru: 
 
-***Di mana keterlambatan pengiriman paling sering terjadi?***  
+***Memangnya, di mana sih daerah yang paling cepet pengirimannya?***  
 
-Untuk menjawab ini, kita akan mengeksplorasi **peta sebaran keterlambatan pengiriman di berbagai state di Brasil**. Mari kita lanjutkan! 👇
+Untuk menjawab ini, kita akan mengeksplorasi **peta sebaran akurasi pengiriman di berbagai state di Brasil**. Mari kita lanjutkan! 👇
 """)
 
 # Prepare geo data
@@ -126,7 +126,7 @@ brasil_map_merged["ket"] = brasil_map_merged["shipping_delay_days"].apply(lambda
 st.text("\n")
 
 # Visualisasi: Choropleth Map
-st.markdown("#### Rata-rata Keterlambatan Pengiriman di Brasil per State, 2017")
+st.markdown("#### Rata-rata Akurasi Pengiriman di Brasil per State, 2017")
 fig = px.choropleth(
     brasil_map_merged,
     geojson=brasil_map_merged.geometry,
@@ -141,7 +141,7 @@ fig.update_geos(fitbounds="locations", visible=False)
 fig.update_traces(marker_line_color="white", marker_line_width=0.1)
 fig.update_layout(
     margin={"r": 0, "t": 40, "l": 0, "b": 0},
-    coloraxis_colorbar=dict(title="Hari Keterlambatan"),
+    coloraxis_colorbar=dict(title="Akurasi Pengiriman"),
     hovermode="closest"
 )
 st.plotly_chart(fig)
